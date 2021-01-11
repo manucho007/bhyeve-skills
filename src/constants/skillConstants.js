@@ -1,0 +1,4 @@
+// Login process
+export const SKILL_LIST_REQUEST = 'SKILL_LIST_REQUEST';
+export const SKILL_LIST_SUCCESS = 'SKILL_LIST_SUCCESS';
+export const SKILL_LIST_FAIL = 'SKILL_LIST_FAIL';
