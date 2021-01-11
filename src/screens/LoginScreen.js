@@ -1,38 +1,38 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-// import { useDispatch, useSelector } from 'react-redux';
-// import Message from '../components/Message';
-// import Loader from '../components/Loader';
+import { useDispatch, useSelector } from 'react-redux';
+import Message from '../components/Message';
+import Loader from '../components/Loader';
 import FormContainer from '../components/FormContainer';
 import { Col, Row, Form, Button } from 'react-bootstrap';
-// import { login } from '../actions/userActions';
+import { signIn } from '../actions/userActions';
 
 const LoginScreen = ({ location, history }) => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
 
-  //   const dispatch = useDispatch();
+  const dispatch = useDispatch();
 
-  //   const userLogin = useSelector((state) => state.userLogin);
-  //   const { loading, error, userInfo } = userLogin;
+  const userLogin = useSelector((state) => state.userLogin);
+  const { loading, error, userToken } = userLogin;
   const redirect = location.search ? location.search.split('=')[1] : '/';
 
-  //   useEffect(() => {
-  //     if (userInfo) {
-  //       history.push(redirect);
-  //     }
-  //   }, [history, userInfo, redirect]);
+  useEffect(() => {
+    if (userToken) {
+      history.push(redirect);
+    }
+  }, [history, userToken, redirect]);
 
   const submitHandler = (e) => {
     e.preventDefault();
     // dispatch action
-    // dispatch(login(email, password));
+    dispatch(signIn(username, password));
   };
   return (
     <FormContainer>
       <h1>Sign In</h1>
-      {/* {error && <Message variant='danger'>{error}</Message>}
-      {loading && <Loader />} */}
+      {error && <Message>{error}</Message>}
+      {loading && <Loader />}
       <Form onSubmit={submitHandler}>
         <Form.Group controlId='username'>
           <Form.Label>Username</Form.Label>
