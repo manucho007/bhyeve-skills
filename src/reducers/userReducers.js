@@ -14,9 +14,7 @@ import {
   GET_USER_PROFILE_FAIL,
 } from '../constants/userConstants';
 
-const initialState = {
-  user: {},
-};
+const initialState = {};
 export const userLoginReducer = (state = initialState, action) => {
   switch (action.type) {
     case USER_LOGIN_REQUEST:
@@ -54,7 +52,7 @@ export const userFillInfoReducer = (state = initialState, action) => {
     case USER_COMPLETE_PROFILE_REQUEST:
       return { loading: true };
     case USER_COMPLETE_PROFILE_SUCCESS:
-      return { loading: false, success: true };
+      return { loading: false, success: true, userInfo: action.payload };
     case USER_COMPLETE_PROFILE_FAIL:
       return { loading: false, error: action.payload };
     default:

@@ -13,7 +13,7 @@ const ProfileScreen = ({ history }) => {
 
   const dispatch = useDispatch();
   useEffect(() => {
-    if (!userToken) {
+    if (!userInfo.firstName) {
       history.push('/login');
     }
     // if (!userInfo.skills) {
@@ -27,7 +27,7 @@ const ProfileScreen = ({ history }) => {
     //   dispatchEvent
     // }
     dispatch(getUserProfile());
-  }, [dispatch, history, userToken]);
+  }, [dispatch, history, userInfo]);
 
   return (
     <Row>

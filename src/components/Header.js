@@ -1,32 +1,32 @@
 import React from 'react';
 import { LinkContainer } from 'react-router-bootstrap';
 import { useDispatch, useSelector } from 'react-redux';
-import { Container, Nav, Navbar, NavDropdown } from 'react-bootstrap';
+import { Container, Nav, Navbar } from 'react-bootstrap';
 import { logout } from '../actions/userActions';
-const Header = () => {
+const Header = ({ history }) => {
   const userLogin = useSelector((state) => state.userLogin);
   const { userInfo } = userLogin;
-
+  // const { profileCompleted } = userInfo;
   const dispatch = useDispatch();
 
   const logoutHandler = () => {
     dispatch(logout());
+    history.push('/login');
   };
 
   return (
     <header>
-      <Navbar bg='dark' variant='dark' collapseOnSelect expand='lg'>
+      <Navbar bg='dark' variant='dark' expand='lg'>
         <Container>
           <LinkContainer to='/'>
             <Navbar.Brand>Skills</Navbar.Brand>
           </LinkContainer>
           <Nav className='mr-auto'>
-            {userInfo.profileCompleted && (
+            {/* {userInfo && (
               <LinkContainer to='/profile'>
                 <Nav.Link>Profile</Nav.Link>
               </LinkContainer>
-            )}
-
+            )} */}
             {userInfo ? (
               <Nav.Link onClick={logoutHandler}>Logout</Nav.Link>
             ) : (
