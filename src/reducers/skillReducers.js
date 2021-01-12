@@ -4,10 +4,10 @@ import {
   SKILL_LIST_SUCCESS,
 } from '../constants/skillConstants';
 
-export const skillListReducer = (state = {}, action) => {
+export const skillListReducer = (state = { skills: [] }, action) => {
   switch (action.type) {
     case SKILL_LIST_REQUEST:
-      return { loading: true };
+      return { loading: true, ...state };
     case SKILL_LIST_SUCCESS:
       return {
         loading: false,
