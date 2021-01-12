@@ -6,6 +6,12 @@ import {
   USER_REGISTER_FAIL,
   USER_REGISTER_REQUEST,
   USER_REGISTER_SUCCESS,
+  USER_COMPLETE_PROFILE_REQUEST,
+  USER_COMPLETE_PROFILE_SUCCESS,
+  USER_COMPLETE_PROFILE_FAIL,
+  GET_USER_PROFILE_REQUEST,
+  GET_USER_PROFILE_SUCCESS,
+  GET_USER_PROFILE_FAIL,
 } from '../constants/userConstants';
 
 const initialState = {
@@ -38,8 +44,32 @@ export const userRegisterReducer = (state = initialState, action) => {
       return { loading: false, success: true };
     case USER_REGISTER_FAIL:
       return { loading: false, error: action.payload };
-    case USER_LOGOUT:
-      return {};
+    default:
+      return state;
+  }
+};
+
+export const userFillInfoReducer = (state = initialState, action) => {
+  switch (action.type) {
+    case USER_COMPLETE_PROFILE_REQUEST:
+      return { loading: true };
+    case USER_COMPLETE_PROFILE_SUCCESS:
+      return { loading: false, success: true };
+    case USER_COMPLETE_PROFILE_FAIL:
+      return { loading: false, error: action.payload };
+    default:
+      return state;
+  }
+};
+
+export const userProfileReducer = (state = initialState, action) => {
+  switch (action.type) {
+    case GET_USER_PROFILE_REQUEST:
+      return { loading: true };
+    case GET_USER_PROFILE_SUCCESS:
+      return { loading: false, user: action.payload };
+    case GET_USER_PROFILE_FAIL:
+      return { loading: false, error: action.payload };
     default:
       return state;
   }

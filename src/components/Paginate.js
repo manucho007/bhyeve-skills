@@ -6,7 +6,6 @@ const Paginate = ({ skillsPerPage, totalSkills, paginate }) => {
   for (let i = 1; i <= Math.ceil(totalSkills / skillsPerPage); i++) {
     pageNumbers.push(i);
   }
-  console.log(skillsPerPage, totalSkills);
   return (
     <Pagination>
       {pageNumbers.map((number) => (
