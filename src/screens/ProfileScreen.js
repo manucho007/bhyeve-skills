@@ -14,45 +14,44 @@ const ProfileScreen = ({ history }) => {
   useEffect(() => {
     if (!userToken) {
       history.push('/login');
+    } else {
+      dispatch(getUserProfile());
     }
-    dispatch(getUserProfile());
   }, [dispatch, history, userToken]);
 
   return (
     <Row>
       {error && <Message variant='danger'>{error}</Message>}
       {loading && <Loader />}
-      {userProfile && !loading && (
-        <>
-          <Col md={4}>
-            <h2>User Profile</h2>
-            <Card>
-              <Card.Img variant='top' src='/images/user.png' />
-              <Card.Body>
-                <Card.Title>
-                  {userFullProfile.firstName} {userFullProfile.lastName}
-                </Card.Title>
-              </Card.Body>
-              <ListGroup className='list-group-flush'>
-                <ListGroupItem>{userFullProfile.username}</ListGroupItem>
-                <ListGroupItem>{userFullProfile.publicId}</ListGroupItem>
-              </ListGroup>
-            </Card>
-          </Col>
-          <Col md={8}>
-            <h2>My Skills</h2>
-            <ListGroup>
-              <h4>{userFullProfile.skills}</h4>
-
-              {/* {userFullProfile &&
-                !loading &&
-                userFullProfile.skills.map((skill) => (
-                  <ListGroupItem key={skill}>{skill}</ListGroupItem>
-                ))} */}
+      <Col md={4}>
+        <h2>User Profile</h2>
+        {!loading && userFullProfile && (
+          <Card>
+            <Card.Img variant='top' src='/images/user.png' />
+            <Card.Body>
+              <Card.Title>
+                {userFullProfile.firstName} {userFullProfile.lastName}
+              </Card.Title>
+            </Card.Body>
+            <ListGroup className='list-group-flush'>
+              <ListGroupItem>{userFullProfile.username}</ListGroupItem>
+              <ListGroupItem>{userFullProfile.publicId}</ListGroupItem>
             </ListGroup>
-          </Col>
-        </>
-      )}
+          </Card>
+        )}
+      </Col>
+      <Col md={8}>
+        <h2>My Skills</h2>
+        <ListGroup>
+          {/* <h4>{userFullProfile.skills}</h4> */}
+
+          {!loading &&
+            userFullProfile &&
+            userFullProfile.skills.map((skill) => (
+              <ListGroupItem key={skill}>{skill}</ListGroupItem>
+            ))}
+        </ListGroup>
+      </Col>
     </Row>
     // <h1>Profile</h1>
   );

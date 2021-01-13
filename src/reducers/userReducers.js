@@ -63,10 +63,10 @@ export const userFillInfoReducer = (state = initialState, action) => {
   }
 };
 
-export const userProfileReducer = (state = { userFullProfile: {} }, action) => {
+export const userProfileReducer = (state = {}, action) => {
   switch (action.type) {
     case GET_USER_PROFILE_REQUEST:
-      return { loading: true, ...state };
+      return { loading: true };
     case GET_USER_PROFILE_SUCCESS:
       return { loading: false, userFullProfile: action.payload };
     case GET_USER_PROFILE_FAIL:
