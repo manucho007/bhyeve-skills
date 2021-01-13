@@ -9,6 +9,9 @@ import {
   USER_COMPLETE_PROFILE_REQUEST,
   USER_COMPLETE_PROFILE_SUCCESS,
   USER_COMPLETE_PROFILE_FAIL,
+  GET_USER_PROFILE_REQUEST,
+  GET_USER_PROFILE_SUCCESS,
+  GET_USER_PROFILE_FAIL,
 } from '../constants/userConstants';
 import axios from 'axios';
 
@@ -117,7 +120,7 @@ export const fillUserInfo = (firstName, lastName) => async (
 export const getUserProfile = () => async (dispatch, getState) => {
   try {
     dispatch({
-      type: USER_COMPLETE_PROFILE_REQUEST,
+      type: GET_USER_PROFILE_REQUEST,
     });
 
     const {
@@ -136,12 +139,13 @@ export const getUserProfile = () => async (dispatch, getState) => {
     );
 
     dispatch({
-      type: USER_COMPLETE_PROFILE_SUCCESS,
+      type: GET_USER_PROFILE_SUCCESS,
       payload: data,
     });
+    localStorage.setItem('userFullProfile', JSON.stringify(data));
   } catch (error) {
     dispatch({
-      type: USER_COMPLETE_PROFILE_FAIL,
+      type: GET_USER_PROFILE_FAIL,
       payload:
         error.response && error.response.data.message
           ? error.response.data.message
@@ -153,5 +157,6 @@ export const getUserProfile = () => async (dispatch, getState) => {
 export const logout = () => async (dispatch) => {
   localStorage.removeItem('userInfo');
   localStorage.removeItem('userToken');
+  localStorage.removeItem('userFullProfile');
   dispatch({ type: USER_LOGOUT });
 };

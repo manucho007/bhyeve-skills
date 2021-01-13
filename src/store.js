@@ -7,7 +7,7 @@ import {
   userProfileReducer,
   userFillInfoReducer,
 } from './reducers/userReducers';
-import { skillListReducer } from './reducers/skillReducers';
+import { skillListReducer, skillAddReducer } from './reducers/skillReducers';
 
 const reducer = combineReducers({
   userLogin: userLoginReducer,
@@ -15,11 +15,13 @@ const reducer = combineReducers({
   userFillInfo: userFillInfoReducer,
   userProfile: userProfileReducer,
   skillList: skillListReducer,
+  skillAdd: skillAddReducer,
 });
 
 const userInfoFromStorage = localStorage.getItem('userInfo')
   ? JSON.parse(localStorage.getItem('userInfo'))
   : null;
+
 const userTokenFromStorage = localStorage.getItem('userToken')
   ? JSON.parse(localStorage.getItem('userToken'))
   : null;

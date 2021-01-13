@@ -11,14 +11,18 @@ const FillUserInfoScreen = ({ history }) => {
 
   const dispatch = useDispatch();
 
-  const { userToken } = useSelector((state) => state.userLogin);
+  const { userToken, userLogin: userLoginInfo } = useSelector(
+    (state) => state.userLogin
+  );
   const userFillInfo = useSelector((state) => state.userFillInfo);
 
   const { loading, error, userInfo, success } = userFillInfo;
+
   const submitHandler = (e) => {
     e.preventDefault();
     dispatch(fillUserInfo(firstName, lastName));
   };
+
   useEffect(() => {
     if (success) {
       history.push('/listskills');
@@ -26,7 +30,7 @@ const FillUserInfoScreen = ({ history }) => {
     if (!userToken) {
       history.push('/login');
     }
-  }, [history, success, userToken]);
+  }, [history, success, userToken, userInfo, userLoginInfo]);
 
   return (
     <FormContainer>

@@ -6,57 +6,55 @@ import Message from '../components/Message';
 import Loader from '../components/Loader';
 
 const ProfileScreen = ({ history }) => {
-  const userLogin = useSelector((state) => state.userLogin);
-  const { loading, error, userInfo, userToken } = userLogin;
-  // const userProfile = useSelector((state) => state.userProfile);
-  // const { loading, error, user } = userProfile;
+  const userProfile = useSelector((state) => state.userProfile);
+  const { loading, error, userFullProfile } = userProfile;
+  const { userToken } = useSelector((state) => state.userLogin);
 
   const dispatch = useDispatch();
   useEffect(() => {
-    if (!userInfo.firstName) {
+    if (!userToken) {
       history.push('/login');
     }
-    // if (!userInfo.skills) {
-    //   // dispatch(listUsers());
-    //   history.push('/listskills');
-    // } else if (!userInfo.firstName) {
-    //   history.push('/fillinfo');
-    // } else if (!userInfo.Token) {
-    //   history.push('/login');
-    // } else {
-    //   dispatchEvent
-    // }
     dispatch(getUserProfile());
-  }, [dispatch, history, userInfo]);
+  }, [dispatch, history, userToken]);
 
   return (
     <Row>
-      <Col md={4}>
-        <h2>User Profile</h2>
-        {error && <Message variant='danger'>{error}</Message>}
-        {loading && <Loader />}
-        <Card>
-          <Card.Img variant='top' src='/images/user.png' />
-          <Card.Body>
-            <Card.Title>
-              {userInfo.firstName} {userInfo.lastName}
-            </Card.Title>
-          </Card.Body>
-          <ListGroup className='list-group-flush'>
-            <ListGroupItem>{userInfo.username}</ListGroupItem>
-            <ListGroupItem>{userInfo.publicId}</ListGroupItem>
-          </ListGroup>
-        </Card>
-      </Col>
-      <Col md={8}>
-        <h2>My Skills</h2>
-        <ListGroup>
-          {userInfo.skills.map((skill) => (
-            <ListGroupItem key={skill}>{skill}</ListGroupItem>
-          ))}
-        </ListGroup>
-      </Col>
+      {error && <Message variant='danger'>{error}</Message>}
+      {loading && <Loader />}
+      {userProfile && !loading && (
+        <>
+          <Col md={4}>
+            <h2>User Profile</h2>
+            <Card>
+              <Card.Img variant='top' src='/images/user.png' />
+              <Card.Body>
+                <Card.Title>
+                  {userFullProfile.firstName} {userFullProfile.lastName}
+                </Card.Title>
+              </Card.Body>
+              <ListGroup className='list-group-flush'>
+                <ListGroupItem>{userFullProfile.username}</ListGroupItem>
+                <ListGroupItem>{userFullProfile.publicId}</ListGroupItem>
+              </ListGroup>
+            </Card>
+          </Col>
+          <Col md={8}>
+            <h2>My Skills</h2>
+            <ListGroup>
+              <h4>{userFullProfile.skills}</h4>
+
+              {/* {userFullProfile &&
+                !loading &&
+                userFullProfile.skills.map((skill) => (
+                  <ListGroupItem key={skill}>{skill}</ListGroupItem>
+                ))} */}
+            </ListGroup>
+          </Col>
+        </>
+      )}
     </Row>
+    // <h1>Profile</h1>
   );
 };
 

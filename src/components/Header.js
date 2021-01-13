@@ -11,7 +11,6 @@ const Header = ({ history }) => {
 
   const logoutHandler = () => {
     dispatch(logout());
-    history.push('/login');
   };
 
   return (
@@ -22,11 +21,6 @@ const Header = ({ history }) => {
             <Navbar.Brand>Skills</Navbar.Brand>
           </LinkContainer>
           <Nav className='mr-auto'>
-            {/* {userInfo && (
-              <LinkContainer to='/profile'>
-                <Nav.Link>Profile</Nav.Link>
-              </LinkContainer>
-            )} */}
             {userInfo ? (
               <Nav.Link onClick={logoutHandler}>Logout</Nav.Link>
             ) : (

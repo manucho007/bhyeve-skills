@@ -15,15 +15,12 @@ const LoginScreen = ({ location, history }) => {
 
   const userLogin = useSelector((state) => state.userLogin);
   const { loading, error, userToken } = userLogin;
-  const redirect = location.search
-    ? location.search.split('=')[1]
-    : '/fillinfo';
 
   useEffect(() => {
     if (userToken) {
-      history.push(redirect);
+      history.push('/fillinfo');
     }
-  }, [history, userToken, redirect]);
+  }, [history, userToken]);
 
   const submitHandler = (e) => {
     e.preventDefault();
@@ -58,10 +55,7 @@ const LoginScreen = ({ location, history }) => {
       </Form>
       <Row className='py-3'>
         <Col>
-          Don't have an account?{' '}
-          <Link to={redirect ? `/register?redirect=${redirect}` : '/register'}>
-            Register
-          </Link>
+          Don't have an account? <Link to='/register'>Register</Link>
         </Col>
       </Row>
     </FormContainer>
