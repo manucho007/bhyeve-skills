@@ -11,7 +11,7 @@ const FillUserInfoScreen = ({ history }) => {
 
   const dispatch = useDispatch();
 
-  const { userToken, userLogin: userLoginInfo } = useSelector(
+  const { userToken, userInfo: userLoginInfo } = useSelector(
     (state) => state.userLogin
   );
   const userFillInfo = useSelector((state) => state.userFillInfo);
@@ -29,6 +29,9 @@ const FillUserInfoScreen = ({ history }) => {
     }
     if (!userToken) {
       history.push('/login');
+    }
+    if (userLoginInfo.profileCompleted) {
+      history.push('/profile');
     }
   }, [history, success, userToken, userInfo, userLoginInfo]);
 

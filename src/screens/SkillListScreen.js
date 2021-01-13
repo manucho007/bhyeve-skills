@@ -17,7 +17,7 @@ const SkillListScreen = ({ history }) => {
 
   //   Get current logged user from state
   const userLogin = useSelector((state) => state.userLogin);
-  const { userToken } = userLogin;
+  const { userToken, userInfo } = userLogin;
 
   //   Get list of products from state
   const skillList = useSelector((state) => state.skillList);
@@ -43,8 +43,11 @@ const SkillListScreen = ({ history }) => {
     if (successAdd) {
       history.push('/profile');
     }
+    if (userInfo.profileCompleted) {
+      history.push('/profile');
+    }
     mySkills.length > 10 ? setSkillsWarning(true) : setSkillsWarning(false);
-  }, [history, successAdd, dispatch, userToken, mySkills]);
+  }, [history, successAdd, dispatch, userToken, mySkills, userInfo]);
 
   // Get current skills
   const indexOfLastSkill = currentPage * skillsPerPage;
