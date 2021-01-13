@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { ListGroup, Form, Button } from 'react-bootstrap';
+import { Form, Button } from 'react-bootstrap';
 import { listSkills } from '../actions/skillActions';
 import Message from '../components/Message';
 import Loader from '../components/Loader';
@@ -12,6 +12,7 @@ const SkillListScreen = ({ history }) => {
   const dispatch = useDispatch();
   const [currentPage, setCurrentPage] = useState(1);
   const [skillsPerPage] = useState(10);
+  const [skillsWarning, setSkillsWarning] = useState(false);
   // const [mySkills, setMySkills] = useState([]);
 
   //   Get current logged user from state
@@ -43,7 +44,7 @@ const SkillListScreen = ({ history }) => {
     if (successAdd) {
       history.push('/profile');
     }
-  }, [history, dispatch, successAdd]);
+  }, [history, successAdd]);
 
   // Get current skills
   const indexOfLastSkill = currentPage * skillsPerPage;
@@ -55,9 +56,16 @@ const SkillListScreen = ({ history }) => {
   const paginate = (pageNumber) => setCurrentPage(pageNumber);
 
   const checkedSkill = (skill) => {
-    skills = [...skills, skill];
+    if (!skills.includes(skill)) {
+      skills = [...skills, skill];
+    } else {
+      skills = skills.filter((item) => item !== skill);
+      console.log('SKill already included');
+    }
     console.log(skills);
+    skills.length > 10 ? setSkillsWarning(true) : setSkillsWarning(false);
   };
+
   const submitHandler = (e) => {
     e.preventDefault();
     // dispatch action
@@ -67,6 +75,9 @@ const SkillListScreen = ({ history }) => {
     <div>
       <h2>Add your skills</h2>
       <h3>Select at least 3, but no more than 10</h3>
+      {skillsWarning && (
+        <Message>Please don't select more than 10 skills</Message>
+      )}
       {errorList && <Message>{errorList}</Message>}
       {loadingList && <Loader />}
       {errorAdd && <Message>{errorAdd}</Message>}
@@ -76,7 +87,7 @@ const SkillListScreen = ({ history }) => {
           <Form.Check
             type='checkbox'
             id={skill.skillName}
-            key={skill.skillName}
+            key={skill.publicId}
             label={skill.skillName}
             // defaultChecked={(e) =>  checkedSkill(e.target.value)}
             onChange={(e) => checkedSkill(e.target.id)}
@@ -86,12 +97,6 @@ const SkillListScreen = ({ history }) => {
           Add SKills
         </Button>
       </Form>
-      {/* <ListGroup className='mb-3'>
-        {currentSkills.map((skill) => (
-          
-          <Skill key={skill.id} skillName={skill.skillName} />
-        ))}
-      </ListGroup> */}
       <Paginate
         skillsPerPage={skillsPerPage}
         totalSkills={skillsList.length}
@@ -99,30 +104,6 @@ const SkillListScreen = ({ history }) => {
       />
     </div>
   );
-  // return (
-  //   <div>
-  //     <h2>Add your skills</h2>
-  //     {error && <Message>{error}</Message>}
-  //     {loading && <Loader />}
-  //     <ListGroup className='mb-3'>
-  //       {currentSkills &&
-  //         currentSkills.map((skill) => (
-  //           // <ListGroup.Item
-  //           //   key={skill.id}
-  //           //   md={3}
-  //           // >
-  //           //   {skill.skillName}
-  //           // </ListGroup.Item>
-  //           <Skill key={skill.id} skillName={skill.skillName} />
-  //         ))}
-  //     </ListGroup>
-  //     <Paginate
-  //       skillsPerPage={skillsPerPage}
-  //       totalSkills={skills.length}
-  //       paginate={paginate}
-  //     />
-  //   </div>
-  // );
 };
 
 export default SkillListScreen;
