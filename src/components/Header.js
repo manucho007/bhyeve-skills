@@ -20,12 +20,14 @@ const Header = ({ history }) => {
           <LinkContainer to='/'>
             <Navbar.Brand>Skills</Navbar.Brand>
           </LinkContainer>
-          <Nav className='ml-auto'>
-            {userInfo && userInfo.profileCompleted && (
+          {userInfo && userInfo.profileCompleted && (
+            <Nav className='mr-auto'>
               <Nav.Link>
                 <i className='fas fa-user'></i> {userInfo.firstName}
               </Nav.Link>
-            )}
+            </Nav>
+          )}
+          <Nav className='ml-auto'>
             {userInfo ? (
               <Nav.Link onClick={logoutHandler}>Logout</Nav.Link>
             ) : (

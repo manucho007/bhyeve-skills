@@ -65,7 +65,6 @@ const SkillListScreen = ({ history }) => {
       setMySkills((mySkills) => mySkills.filter((item) => item !== skill));
       console.log('SKill already included');
     }
-    console.log(mySkills);
   };
 
   const submitHandler = (e) => {

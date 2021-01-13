@@ -7,7 +7,7 @@ import FormContainer from '../components/FormContainer';
 import { Col, Row, Form, Button } from 'react-bootstrap';
 import { signIn } from '../actions/userActions';
 
-const LoginScreen = ({ location, history }) => {
+const LoginScreen = ({ history }) => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
 
