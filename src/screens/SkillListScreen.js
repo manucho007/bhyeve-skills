@@ -13,7 +13,7 @@ const SkillListScreen = ({ history }) => {
   const [currentPage, setCurrentPage] = useState(1);
   const [skillsPerPage] = useState(10);
   const [skillsWarning, setSkillsWarning] = useState(false);
-  // const [mySkills, setMySkills] = useState([]);
+  const [mySkills, setMySkills] = useState([]);
 
   //   Get current logged user from state
   const userLogin = useSelector((state) => state.userLogin);
@@ -34,7 +34,6 @@ const SkillListScreen = ({ history }) => {
     success: successAdd,
   } = skillAdd;
 
-  let skills = [];
   useEffect(() => {
     if (!userToken) {
       history.push('/login');
@@ -44,7 +43,8 @@ const SkillListScreen = ({ history }) => {
     if (successAdd) {
       history.push('/profile');
     }
-  }, [history, successAdd]);
+    mySkills.length > 10 ? setSkillsWarning(true) : setSkillsWarning(false);
+  }, [history, successAdd, dispatch, userToken, mySkills]);
 
   // Get current skills
   const indexOfLastSkill = currentPage * skillsPerPage;
@@ -56,20 +56,19 @@ const SkillListScreen = ({ history }) => {
   const paginate = (pageNumber) => setCurrentPage(pageNumber);
 
   const checkedSkill = (skill) => {
-    if (!skills.includes(skill)) {
-      skills = [...skills, skill];
+    if (!mySkills.includes(skill)) {
+      setMySkills((mySkills) => [...mySkills, skill]);
     } else {
-      skills = skills.filter((item) => item !== skill);
+      setMySkills((mySkills) => mySkills.filter((item) => item !== skill));
       console.log('SKill already included');
     }
-    console.log(skills);
-    skills.length > 10 ? setSkillsWarning(true) : setSkillsWarning(false);
+    console.log(mySkills);
   };
 
   const submitHandler = (e) => {
     e.preventDefault();
     // dispatch action
-    dispatch(addSkills(skills));
+    dispatch(addSkills(mySkills));
   };
   return (
     <div>
